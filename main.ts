@@ -38,6 +38,12 @@ function validate(entry: string): { chars: number; bytes: number } {
   if (entry.includes("\n") || entry.includes("\r")) {
     throw new Error("entry must be a single line");
   }
+  if (entry.includes("  ")) {
+    throw new Error("entry must not contain consecutive spaces (sloppy on a printed label)");
+  }
+  if (!entry.endsWith(".")) {
+    throw new Error("entry must end with a full stop, as a printed label sentence does");
+  }
   if (!LABEL_HEADER.test(entry)) {
     throw new Error("entry must open with a label signal word (CAUTION:/WARNING:/DANGER:)");
   }
